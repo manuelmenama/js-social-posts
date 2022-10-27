@@ -76,11 +76,21 @@ const posts = [
 
 */
 
+let isLike = false;
+
 const postList = document.getElementById("container");
 
 postListGenerator();
 
-//const likeButton = document.get
+const likeButton = document.getElementsByClassName("js-like-button");
+
+function clickOnLike(idPost) {
+    console.log(this);
+    if(!isLike){
+        likeButton[idPost].classList.add("like-button--liked");
+        isLike = true;
+    }
+};
 
 function postListGenerator() {
     postList.innerHTML = "";
@@ -108,7 +118,7 @@ function postListGenerator() {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="1">
+                        <a class="like-button  js-like-button" href="#" data-postid="${post.id}" onclick="clickOnLike(${post.id - 1})">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
