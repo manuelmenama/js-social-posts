@@ -76,8 +76,12 @@ const posts = [
 
 */
 
+const arrayOfLikedPost = [];
+
 let isLike = false;
 let totalLike = 0;
+
+
 
 const postList = document.getElementById("container");
 
@@ -85,15 +89,30 @@ postListGenerator();
 
 const likeButton = document.getElementsByClassName("js-like-button");
 
+/*function defaultImagePlacement(imageFromArray) {
+    if(!imageFromArray){
+        let name = post.author.name;
+
+        console.log(name);
+    }
+}*/
+
 function clickOnLike(idPost) {
-    let {likes} = posts;
-    if(!isLike){
-        likeButton[idPost].classList.add("like-button--liked");
-        let utilitiesForCounter = "like-counter-" + (idPost + 1);
-        console.log(utilitiesForCounter);
-        let likeCounter = document.getElementById(utilitiesForCounter);
+
+    let utilitiesForCounter = "like-counter-" + (idPost + 1);
+    let likeCounter = document.getElementById(utilitiesForCounter);
+    totalLike = parseInt(likeCounter.innerHTML);
+
+    if(isLike){
+        likeButton[idPost].classList.remove("like-button--liked");
         totalLike = parseInt(likeCounter.innerHTML);
+        likeCounter.innerHTML = totalLike - 1;
+        isLike = false;
+    }else{
+        likeButton[idPost].classList.add("like-button--liked");
         likeCounter.innerHTML = totalLike + 1;
+        arrayOfLikedPost.push(idPost);
+        console.log(arrayOfLikedPost);
         isLike = true;
     }
 };
@@ -102,13 +121,27 @@ function postListGenerator() {
     postList.innerHTML = "";
     posts.forEach(post => {
 
+        
         let convertDataFormat = new Date (post.created).toLocaleDateString("it-IT");
+        let defaultImage = "";
+
+        if(!post.author.image){
+            let takeName = post.author.name;
+            const splitName = takeName.split(" ")
+            defaultImage = `<div class="profile-pic-default"><span>${splitName[0].charAt(0)}${splitName[1].charAt(0)}</span></div>`;
+            post.author.image = "";
+        }
+
+
+        console.log(defaultImage);
+
 
         let postExample = `
         <div class="post">
             <div class="post__header">
                 <div class="post-meta">                    
                     <div class="post-meta__icon">
+                        ${defaultImage}
                         <img class="profile-pic" src="${post.author.image}" alt="${post.author.image}">                    
                     </div>
                     <div class="post-meta__data">
