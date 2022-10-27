@@ -76,33 +76,31 @@ const posts = [
 
 */
 
+//array in cui inserisco l'id dei post a cui metto like
 const arrayOfLikedPost = [];
 
+//controllo e contatore per il "mi piace"
 let isLike = false;
 let totalLike = 0;
 
-
-
+//dichiaro il contenitore di tutti i post
 const postList = document.getElementById("container");
 
+//funzione che gnera i post//
 postListGenerator();
 
 const likeButton = document.getElementsByClassName("js-like-button");
-
-/*function defaultImagePlacement(imageFromArray) {
-    if(!imageFromArray){
-        let name = post.author.name;
-
-        console.log(name);
-    }
-}*/
-
+ 
+//funzione del click sul bottone "mi piace"
 function clickOnLike(idPost) {
     
+    //assegno ad una variabile il valore che identificherà l'id del bottone "mi piace"
     let utilitiesForCounter = "like-counter-" + (idPost + 1);
     let likeCounter = document.getElementById(utilitiesForCounter);
+    //i like totali vengono letti ogni volta
     totalLike = parseInt(likeCounter.innerHTML);
 
+    //condizione per la rimozione della classe e incremento/decremento dei like
     if(isLike){
         likeButton[idPost].classList.remove("like-button--liked");
         totalLike = parseInt(likeCounter.innerHTML);
@@ -117,14 +115,16 @@ function clickOnLike(idPost) {
     }
 };
 
+//funzione che genera le caselle interamente
 function postListGenerator() {
     postList.innerHTML = "";
     posts.forEach(post => {
 
-        
+        //converto la data in formato italiano
         let convertDataFormat = new Date (post.created).toLocaleDateString("it-IT");
         let defaultImage = "";
 
+        //condizione per riconoscere gli utenti senza immagine di profilo e gestire la mancanza
         if(!post.author.image){
             let takeName = post.author.name;
             const splitName = takeName.split(" ")
@@ -157,7 +157,7 @@ function postListGenerator() {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="#" data-postid="${post.id}" onclick="clickOnLike(${post.id - 1})">
+                        <a class="like-button  js-like-button" href="javascript:void(0)" data-postid="${post.id}" onclick="clickOnLike(${post.id - 1})">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
