@@ -98,7 +98,7 @@ const likeButton = document.getElementsByClassName("js-like-button");
 }*/
 
 function clickOnLike(idPost) {
-
+    
     let utilitiesForCounter = "like-counter-" + (idPost + 1);
     let likeCounter = document.getElementById(utilitiesForCounter);
     totalLike = parseInt(likeCounter.innerHTML);
