@@ -77,6 +77,7 @@ const posts = [
 */
 
 let isLike = false;
+let totalLike = 0;
 
 const postList = document.getElementById("container");
 
@@ -85,9 +86,14 @@ postListGenerator();
 const likeButton = document.getElementsByClassName("js-like-button");
 
 function clickOnLike(idPost) {
-    console.log(this);
+    let {likes} = posts;
     if(!isLike){
         likeButton[idPost].classList.add("like-button--liked");
+        let utilitiesForCounter = "like-counter-" + (idPost + 1);
+        console.log(utilitiesForCounter);
+        let likeCounter = document.getElementById(utilitiesForCounter);
+        totalLike = parseInt(likeCounter.innerHTML);
+        likeCounter.innerHTML = totalLike + 1;
         isLike = true;
     }
 };
@@ -124,7 +130,7 @@ function postListGenerator() {
                         </a>
                     </div>
                     <div class="likes__counter">
-                        Piace a <b id="like-counter-1" class="js-likes-counter">${post.likes}</b> persone
+                        Piace a <b id="like-counter-${post.id}" class="js-likes-counter">${post.likes}</b> persone
                     </div>
                 </div> 
             </div>            
