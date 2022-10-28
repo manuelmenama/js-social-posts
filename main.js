@@ -80,7 +80,7 @@ const posts = [
 const arrayOfLikedPost = [];
 
 //controllo e contatore per il "mi piace"
-let isLike = false;
+// let isLike = false;
 let totalLike = 0;
 
 //dichiaro il contenitore di tutti i post
@@ -93,6 +93,9 @@ const likeButton = document.getElementsByClassName("js-like-button");
  
 //funzione del click sul bottone "mi piace"
 function clickOnLike(idPost) {
+    //selezione del post
+    let controlId = "id-custom" + (idPost + 1);
+    let likedPost = document.getElementById(controlId);
     
     //assegno ad una variabile il valore che identificherà l'id del bottone "mi piace"
     let utilitiesForCounter = "like-counter-" + (idPost + 1);
@@ -101,18 +104,18 @@ function clickOnLike(idPost) {
     totalLike = parseInt(likeCounter.innerHTML);
 
     //condizione per la rimozione della classe e incremento/decremento dei like
-    if(isLike){
+    if(likedPost.classList.contains("like-button--liked")){
         likeButton[idPost].classList.remove("like-button--liked");
         totalLike = parseInt(likeCounter.innerHTML);
         likeCounter.innerHTML = totalLike - 1;
-        isLike = false;
+        // isLike = false;
     }else{
         likeButton[idPost].classList.add("like-button--liked");
         likeCounter.innerHTML = totalLike + 1;
         arrayOfLikedPost.push(idPost);
-        console.log(arrayOfLikedPost);
-        isLike = true;
+        // isLike = true;
     }
+    console.log(arrayOfLikedPost);
 };
 
 //funzione che genera le caselle interamente
@@ -157,7 +160,7 @@ function postListGenerator() {
             <div class="post__footer">
                 <div class="likes js-likes">
                     <div class="likes__cta">
-                        <a class="like-button  js-like-button" href="javascript:void(0)" data-postid="${post.id}" onclick="clickOnLike(${post.id - 1})">
+                        <a class="like-button  js-like-button" id="id-custom${post.id}" href="javascript:void(0)" data-postid="${post.id}" onclick="clickOnLike(${post.id - 1})">
                             <i class="like-button__icon fas fa-thumbs-up" aria-hidden="true"></i>
                             <span class="like-button__label">Mi Piace</span>
                         </a>
